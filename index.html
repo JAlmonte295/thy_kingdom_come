@@ -9,79 +9,57 @@
 </head>
 <body>
     <header>
-    <h1>Thy Kingdom Come</h1>
+        <img src="./assets/logo.png" alt="Thy Kingdom Come Logo" class="logo">
+        <h1 class="title">Thy Kingdom Come</h1>
+        <p class="subtitle">A Game of Strategy and Kingdom Building</p>
     </header>
     <main>
-        <div class ="screen">
-            <button class="button" id="startButton">Start</button>  
-            <button class="button" id="nextButton">Next Day</button>
-            <!-- add oncClick -->
-            <button class="restartButton">Restart</button>
-            <div class ="mainScreen">
-                <p>Welcome to Thy Kingdom Come! Build your kingdom, manage resources, and grow your empire. Click 'Start' to begin your journey!
-                    As a player, I want my kingdom to survive the incoming attack from an enemy state, they will arrived in seven days.
-                    As a player, I want to manage my resources effectively to ensure the survival of my kingdom.
-                    As a player, I want to see a visual representation of my choices and their impact on my kingdom.
-                    As a player, I need to make sure that my statistics are at certain threshold before the attackers arrive. 
-                    As a player, I want to be able to see how many days I have left/time of day.
-                    As a player, I want to see an update message on my stats, see if I'm in a good standing.
-                    As a player, I want to be able to see my stats and how they are doing.
-                    As a player, I want to see my current standing at the end of the each day.
-                    As a player, I want to see visual feedback on the labeled buttons, as I click and add to my overall statistics. As a player, I want to see the consequences of my choices through a good ending or a bad ending. 
-                    As a player I want to try again to improve my chances at the end of the game.
-                    As a player, I want to see the consequences of my choices through a good ending or a bad ending. 
-                </p>
+        <div id="game-container">
+  <!-- This will hold the background image and content -->
 
-            </div>
-            <div class ="endOfDayScreen">
-                <p>End of Day Summary: Review your progress and prepare for the next day.</p>
-            </div>
-            <div class ="endingScreen">
-                <p>Game Over: Your kingdom has fallen. Try again to build a stronger empire!</p>
-            </div>
-        </div>
+  <div class="stats-and-time-panel">
+    <div class="stats-container">
+      <div class="stat-item">
+        <p>💰 Treasury: <span id="treasury-total">0</span></p>
+      </div>
+      <div class="stat-item">
+        <p>😊 Popularity: <span id="popularity-total">0</span></p>
+      </div>
+      <div class="stat-item">
+        <p>⚔️ Power Level: <span id="power-level-total">0</span></p>
+      </div>
+    </div>
 
-        <div class ="money-div">
-            <p>💰Treasury: <span id="treasury-total">0</span></p>
-        </div>
+    <div class="time-container">
+      <div class="time-display">
+        <p>Day: <span id="current-day">1</span> / 7</p>
+      </div>
+      <div class="time-display">
+        <p>Time: <span id="current-time-of-day">Morning</span></p>
+      </div>
+    </div>
+  </div>
 
-        <div class ="popularity-div">
-            <p>❤️Popularity: <span id="popularity-total">0</span></p>
-        </div>
 
-        <div class ="time-container">
-            <div class=""time-display">
-                <p>Day: <span id="current-day">1</span> / 7</p>
-            </div>
-            <div class="time-display">
-                <p>Time: <span id="current-time-of-day">Morning</span></p>
-        </div>
-            </div>
+</div>
 
-        <div class ="actions-div">
-            <div class="military-div">
-                <p>🏰 Military: <span id="military-total">0</span></p>
-            </div>
-            <div class="food-div">
-                <p>🍞 Food: <span id="food-total">0</span></p>
-            </div>
-            <div class="structure-div">
-                <p>🏰Structure: <span id="structure-total">0</span></p>
-            </div>
-            <div class ="taxes-div">
-                <p>💸Taxes <span id="taxes-total"></span></p>
-            </div>
-            <div class ="culture-div">
-                <p>🎭Culture: <span id="culture-total">0</span></p>
-            </div>
-            <div class ="powerLevel-div">
-                <p>⚔️ Power Level: <span id="power-level-total">0</span></p>
-            </div>
-
-        <div class ="textBox">
-            <p id="textBox"></p>
-
-        </div>
+  <div class="actions-container">
+    <div class="action-button military-div">
+      <p>🏰 Military: <span id="military-total">0</span></p>
+    </div>
+    <div class="action-button structure-div">
+      <p>🏗️ Structure: <span id="structure-total">0</span></p>
+    </div>
+    <div class="action-button food-div">
+      <p>🍎 Food: <span id="food-total">0</span></p>
+    </div>
+    <div class="action-button culture-div">
+      <p>🎨 Culture: <span id="culture-total">0</span></p>
+    </div>
+    <div class="action-button taxes-div">
+      <p>💸 Taxes: <span id="taxes-total">0</span></p>
+    </div>
+  </div>
 
     </main>
 </body>
