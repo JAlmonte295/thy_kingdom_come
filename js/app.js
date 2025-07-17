@@ -1,71 +1,20 @@
 console.log ("Welcome to my Kingdom come");
 
-//computer or another kingdom will play as the upcoming enemy that will attack the kingdom, they will have a power level. (not sure if to have set level or make it random array of numbers)
-//user's goal is to have a certain amount of points on military and structure, which when added together will equal to a power level, which by the end of the 7th day will be measured against the computer's kingdom. 
-//IF by the end of the 7th day, the kingdom has a lower power level than the computer, the computer wins. ELSE IF the user has a higher power level, they win the game.
-//user will be able to CLICK 1 out of 5 BUTTONS to add to statistics and move the game foward.
-//with each CLICK of a BUTTON, the time of day will move forward.
-//each day will have 3 times of days, morning, afternoon, evening. The game will end after the 7th day's evening CLICK (21 CLICKS?). The results will be RENDERED with a results message/screen/picture revealing the WIN/LOSE SCENARIO.
-//the user starts with a set amount of stats (maybe random if I have time).
-//the users main resource will be the kingdom's treasury. 
-//Each BUTTON CLICK will decrease a point to the treasury. 
-//Each time of day that passes, will lower the stat of food, popularity and structure (still trying to figure out the balance, still not 100% on the 5 main stats...). 
-//The user must keep a balance of the stats before the enemy arrives. Specifically Military and Structure (does the user know this?). 
-//IF FOOD/POPULARITY stat reaches 0, THEN the game will have a premature LOSS Scenario. (the people revolt against the king)
-
-//TREASURY could reach 0, but if power level is high enough, user could still win?
-//TAXES will increase the treasury but lower POPULARITY (again balance...)
-//with every BUTTON CLICK, render a game message let the user know the current standing (i.e "You have feed your people, they are ${happy}) <- emotions based on point level?
-
-//visual RENDER time of day?
-//at the end of the 7th day, render a results message with the WIN/LOSE SCENARIO. Depending on the user's power level vs the computer's power level. 
-
-
-
-/*-------------- Constants -------------*/
-
-
-
-/*---------- Variables (state) ---------*/
-
-let currentDay = 1;
-let currentTime = 0; // 0 for morning, 1 for afternoon, 2 for evening
-
-// initalize variables for the kingdom's stats
-let treasuryPoints = 100; // this is the starting amount of treasury points
-let popularityPoints = 50; // this is the starting amount of popularity points, at the end of the day, popularity will increase or decrease based on the user's actions
-let powerLevelpoints = 0; // this is the total power level of the kingdom, which is the sum of military and structure points
-let militaryPoints = 50; // everytime military button is clicked, military will increase by 10 points, but treasury will decrease by 5 points
-let structurePoints = 50; // everytime structure button is clicked, structure will increase by 10 points, but treasury will decrease by 5 points
-let foodPoints = 50; // everytime food button is clicked, food will increase by 10 points, but treasury will decrease by 5 points
-let culturePoints = 50; // everytime culture button is clicked, culture will increase by 10 points, but treasury will decrease by 5 points
-
-
-// let taxesPoints; // everytime taxes button is clicked, treasury will increase by 10 points, but popularity will decrease by 5 points
-
-
-
-/*----- Cached Element References  -----*/
-
-
-/*-------------- Functions -------------*/
-
-
-
-/*----------- Event Listeners ----------*/
-
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Game state variables
+  let treasuryPoints, popularityPoints, militaryPoints, structurePoints, foodPoints, culturePoints;
+  let currentDay, currentTimeIndex, actionTakenThisTimeSlot;
 
-
-  // Time and day variables
-  let currentDay = 1;
+  // Game constants
   const maxDays = 7;
   const timePhases = ['Morning', 'Afternoon', 'Evening'];
-  let currentTimeIndex = 0; // 0: Morning, 1: Afternoon, 2: Evening
 
-  // Track actions per time slot
-  let actionTakenThisTimeSlot = false; // Only one action allowed per time slot
+
+  // Cached elements for UI sections
+  const startScreen = document.getElementById('start-screen');
+  const gameContainer = document.getElementById('game-container');
+  const actionsContainer = document.querySelector('.actions-container');
 
   // Get references to HTML elements for displaying values
   const treasuryTotalSpan = document.getElementById('treasury-total');
@@ -75,6 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const structureTotalSpan = document.getElementById('structure-total');
   const foodTotalSpan = document.getElementById('food-total');
   const cultureTotalSpan = document.getElementById('culture-total');
+
+  const endOfDayScreen = document.getElementById('end-of-day-screen');
+  const endDayNumberSpan = document.getElementById('end-day-number');
+  const eodTreasurySpan = document.getElementById('eod-treasury');
+  const eodPopularitySpan = document.getElementById('eod-popularity');
+  const eodMilitarySpan = document.getElementById('eod-military');
+  const eodStructureSpan = document.getElementById('eod-structure');
+  const eodFoodSpan = document.getElementById('eod-food');
+  const eodCultureSpan = document.getElementById('eod-culture');
+  const eodPowerSpan = document.getElementById('eod-power');
+  const winProbabilityMessage = document.getElementById('win-probability-message');
+  const winProbabilitySpan = document.getElementById('win-probability');
+  const gameOverScreen = document.getElementById('game-over-screen');
+  const gameOverMessage = document.getElementById('game-over-message');
+  const startGameButton = document.getElementById('start-game-button');
+  const continueButton = document.getElementById('continue-button');
+
+  const messageBox = document.getElementById('message-box');
+  const messageText = document.getElementById('message-text');
 
   const currentDaySpan = document.getElementById('current-day');
   const currentTimeOfDaySpan = document.getElementById('current-time-of-day');
@@ -86,6 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const foodDiv = document.querySelector('.food-div');
   const cultureDiv = document.querySelector('.culture-div');
   const taxesDiv = document.querySelector('.taxes-div');
+
+  // Function to start the game
+  function startGame() {
+    // Hide start screen and show game UI
+    startScreen.classList.add('hidden');
+    gameContainer.classList.remove('invisible');
+    actionsContainer.classList.remove('invisible');
+
+    resetGame();
+  }
 
   // Function to update all displayed values
   function updateDisplay() {
@@ -99,6 +77,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     currentDaySpan.textContent = currentDay;
     currentTimeOfDaySpan.textContent = timePhases[currentTimeIndex];
+  }
+
+  // Function to display a status message
+  function showStatusMessage(message, isTemporary = false) {
+    messageText.textContent = message;
+    messageBox.classList.add('show');
+
+    if (isTemporary) {
+      // Hide after a short delay for temporary messages (e.g., errors)
+      setTimeout(() => {
+        messageBox.classList.remove('show');
+      }, 2500); // Message visible for 2.5 seconds
+    }
   }
 
   // Function to disable all action buttons
@@ -119,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to handle the end of a time slot
   function endCurrentTimeSlot() {
+    messageBox.classList.remove('show'); // Hide status message
     currentTimeIndex++;
     actionTakenThisTimeSlot = false; // Reset for the new time slot
     enableActionButtons(); // Re-enable buttons for the next time slot
@@ -126,43 +118,125 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentTimeIndex >= timePhases.length) {
       // End of day
       currentTimeIndex = 0; // Reset to Morning
+
       currentDay++;
+      endDayNumberSpan.textContent = currentDay;
+      eodTreasurySpan.textContent = treasuryPoints;
+      eodPopularitySpan.textContent = popularityPoints;
+      eodMilitarySpan.textContent = militaryPoints;
+      eodStructureSpan.textContent = structurePoints;
+      eodFoodSpan.textContent = foodPoints;
+      eodCultureSpan.textContent = culturePoints;
+      const currentPowerLevel = militaryPoints + structurePoints;
+      eodPowerSpan.textContent = currentPowerLevel;
+
+      // Calculate and display win probability (simplified example)
+      //  This should be adjusted based on your actual game logic
+      let winProbability = 50; // Default probability
+      if (currentPowerLevel > 70) {
+        winProbability = 75;
+      } else if (currentPowerLevel < 40) {
+        winProbability = 25;
+      }
+      winProbabilitySpan.textContent = winProbability;
+
+      // Display win/loss message based on probability
+      if (winProbability >= 75) {
+        winProbabilityMessage.textContent = "Your kingdom is strong! Your chances of victory are excellent!";
+      } else if (winProbability <= 25) {
+        winProbabilityMessage.textContent = "Your kingdom is in peril! Prepare for a difficult battle!";
+      }
+      endOfDayScreen.style.display = 'block';
 
       // Implement end-of-day effects here
-      if (foodPoints < militaryPoints + structurePoints) {
-        popularityPoints -= 10;
-      } else {
-        foodPoints -= (militaryPoints + structurePoints) / 2;
+      foodPoints -= 5; // Natural food decrease each day
+
+      // Decrease popularity only if food or culture is low
+      if (foodPoints < 20) {
+          popularityPoints -= 5;
+          showStatusMessage("Food is scarce! Popularity decreases.", true);
       }
 
+      if (culturePoints < 20) {
+          popularityPoints -= 5;
+          showStatusMessage("Culture is suffering! Popularity decreases.", true);
+      }
+
+      if (foodPoints < 20 || popularityPoints < 20) {
+        culturePoints -= 5;
+        showStatusMessage("Low food or popularity is affecting cultural activities.", true);
+      }
+
+      foodPoints = Math.max(0, foodPoints);
+      popularityPoints = Math.max(0, popularityPoints);
       // Check if game over (7 days passed)
       if (currentDay > maxDays) {
         // Game Over logic
-        alert("7 days have passed! The enemy attacks!"); // You can customize this
-        resetGame();
-        return;
+        currentDay = maxDays; // Prevent day from going past 7 on the display
       }
+
+      // Check for early game over due to zero popularity
+      if (popularityPoints <= 0) {
+        endGame("Your rule has collapsed. The people have revolted!");
+      }
+      endOfDayScreen.style.display = popularityPoints <=0 ? 'none' : 'block'
     }
     updateDisplay();
   }
 
+  // Function to handle continuing to the next day from the EOD screen
+  function continueToNextDay() {
+    endOfDayScreen.style.display = 'none';
+    if (currentDay >= maxDays) { // Check if 7 days have passed (game over)
+      let playerPower = militaryPoints + structurePoints;
+      // Placeholder for enemy power (you should calculate this based on your game logic)
+      let enemyPower = 80; 
+
+      // Basic win/loss condition
+      if (playerPower >= enemyPower) {
+        gameOverMessage.textContent = "Your kingdom stood strong and repelled the enemy forces! Victory is yours!";
+      } else {
+        gameOverMessage.textContent = "Your kingdom has fallen... The enemy overwhelmed your defenses. But you can always try again!";
+      }
+      gameOverScreen.style.display = 'block'; // Show the game over screen
+    }
+  }
+
+  // Function to handle the end of the game
+  function endGame(message) {
+    gameOverMessage.textContent = message;
+    gameOverScreen.style.display = 'block';
+    if (popularityPoints <= 0){
+    }
+  }
+
+  // Event listener for the replay button
+  document.getElementById('replay-button').addEventListener('click', () => {
+    gameOverScreen.style.display = 'none'; // Hide the game over screen
+    resetGame(); // Reset the game state to start a new game
+  });
+
   // Function to reset the game state
   function resetGame() {
-    treasuryPoints = 100;
-    popularityPoints = 50;
-    militaryPoints = 50;
-    structurePoints = 50;
-    foodPoints = 50;
-    culturePoints = 50;
+    // All initial values are set here
+    treasuryPoints = 50;
+    popularityPoints = 25;
+    militaryPoints = 25;
+    structurePoints = 25;
+    foodPoints = 25;
+    culturePoints = 25;
     currentDay = 1;
     currentTimeIndex = 0;
     actionTakenThisTimeSlot = false;
     updateDisplay();
-    enableActionButtons(); // Ensure buttons are enabled on reset
+    enableActionButtons();
+    endOfDayScreen.style.display = 'none';
   }
+  
+  // Set initial UI state (game hidden)
+  gameContainer.classList.add('invisible');
+  actionsContainer.classList.add('invisible');
 
-  // Initial display update
-  updateDisplay();
 
   // Event listener for Military button
   militaryDiv.addEventListener('click', () => {
@@ -171,13 +245,12 @@ document.addEventListener('DOMContentLoaded', () => {
         militaryPoints += 10;
         treasuryPoints -= 5;
         actionTakenThisTimeSlot = true;
+        showStatusMessage('You have bolstered your army. Your military might grows!');
         updateDisplay();
         disableActionButtons(); // Disable all buttons after this action
-        setTimeout(endCurrentTimeSlot, 1000); // Advance time slot after a short delay
+        setTimeout(endCurrentTimeSlot, 1500); // Advance time slot after a short delay
       } else {
-        // You could visually indicate lack of treasury without an alert here.
-        // E.g., make the button shake, change its border color temporarily, etc.
-        // For now, let's just do nothing.
+        showStatusMessage('Your treasury is too low to fund the military!', true);
       }
     }
   });
@@ -189,9 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
         structurePoints += 10;
         treasuryPoints -= 5;
         actionTakenThisTimeSlot = true;
+        showStatusMessage("New walls have been erected, strengthening your kingdom's defenses.");
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1000);
+        setTimeout(endCurrentTimeSlot, 1500);
+      } else {
+        showStatusMessage('You lack the funds for new construction projects.', true);
       }
     }
   });
@@ -203,9 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
         foodPoints += 10;
         treasuryPoints -= 5;
         actionTakenThisTimeSlot = true;
+        showStatusMessage('The granaries are filling up. Your people will not go hungry this day.');
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1000);
+        setTimeout(endCurrentTimeSlot, 1500);
+      } else {
+        showStatusMessage('Not enough gold to purchase more food.', true);
       }
     }
   });
@@ -217,9 +296,12 @@ document.addEventListener('DOMContentLoaded', () => {
         culturePoints += 10;
         treasuryPoints -= 5;
         actionTakenThisTimeSlot = true;
+        showStatusMessage('The arts flourish, bringing joy and prestige to your kingdom.');
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1000);
+        setTimeout(endCurrentTimeSlot, 1500);
+      } else {
+        showStatusMessage('There are no funds available to support the arts.', true);
       }
     }
   });
@@ -230,17 +312,15 @@ document.addEventListener('DOMContentLoaded', () => {
       treasuryPoints += 10;
       popularityPoints -= 5;
       actionTakenThisTimeSlot = true;
+      showStatusMessage("The treasury swells from new taxes, but your people's spirits are dampened.");
       updateDisplay();
       disableActionButtons();
-      setTimeout(endCurrentTimeSlot, 1000);
+      setTimeout(endCurrentTimeSlot, 1500);
     }
   });
+
+  // Event listener for the "Continue" button on the end-of-day screen
+  startGameButton.addEventListener('click', startGame);
+  continueButton.addEventListener('click', continueToNextDay);
+  
 });
-
-
-
-
-
-
-//show the current total of milatary points with every click
-

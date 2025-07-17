@@ -34,6 +34,14 @@ body {
   justify-content: space-between; /* Push stats to top, actions to bottom */
   align-items: stretch; /* Stretch items to fill width */
 }
+/* Visibility control for game elements */
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
 
 /* Side Panel for Stats and Time */
 .stats-and-time-panel {
@@ -127,6 +135,37 @@ body {
   transform: none; /* No lift effect when disabled */
 }
 
+/* Message Box Styling */
+#message-box {
+  position: absolute;
+  bottom: 20px; /* Positioned near the bottom of the game container */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #f0f0f0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  z-index: 20;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s 0.5s; /* Hide immediately when opacity is 0 */
+}
+
+#message-box.show {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s; /* Show immediately */
+}
+
+#message-box p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
 /* Background images for different times of day (example) */
 /* These will be applied to #game-container by JavaScript */
 #game-container.morning {
@@ -139,6 +178,124 @@ body {
 
 #game-container.evening {
   background-image: url();
+}
+
+/* Start Screen Styling */
+#start-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 25, 40, 0.95); /* Dark, thematic overlay */
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 50; /* Ensure it's on top of everything */
+  padding: 20px;
+}
+
+#start-screen h2 {
+  font-size: 2.5em;
+  color: #ffe600;
+  margin-bottom: 20px;
+}
+
+#start-screen p {
+  font-size: 1.2em;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+#start-game-button {
+  background-color: #27ae60; /* A strong, positive green */
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* End of Day Screen Styling */
+#end-of-day-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  z-index: 30;
+  display: none; /* Initially hidden */
+}
+
+#end-of-day-screen h2 {
+  margin-bottom: 15px;
+  font-size: 1.8em;
+  color: #ffe600; /* Gold color for the heading */
+}
+
+#kingdom-status p {
+  margin: 8px 0;
+  font-size: 1.2em;
+}
+
+#kingdom-status span {
+  font-weight: bold;
+  color: #a4e4d8;
+}
+
+#continue-button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+/* Game Over Screen Styling */
+#game-over-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #f0f0f0;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    z-index: 40;
+    display: none; /* Initially hidden */
+}
+
+#game-over-screen h2 {
+    font-size: 2.2em;
+    color: #e74c3c; /* A thematic red for game over */
+    margin-bottom: 10px;
+}
+
+#replay-button {
+    background-color: #2980b9;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
 }
 
 /* Media Queries for Responsiveness */
