@@ -1,72 +1,81 @@
-/* Basic Reset & Body Styling */
+/* ==============================
+   RESET & BASE STYLES
+============================== */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+/* ==============================
+   HEADER
+============================== */
 header {
-  background-color: #2c3e50; /* Dark blue-grey for header */
+  background-color: #2c3e50;
   color: white;
   text-align: center;
   padding: 20px;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%; /* Ensures the body and html take full viewport height */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #f0f0f0; /* Light text color for contrast */
-  display: flex;
-  flex-direction: column; /* Stack header, main, and footer vertically */
-    align-items: center; /* Center content horizontally */
-}
-
-/* Game Container - The main wrapper */
-#game-container {
-  position: relative; /* Allows child elements to be positioned relative to this */
-  width: 1000px; /* Full viewport width */
-  height: 500px; /* Full viewport height */
-  background-image: url(../images/testBack.jpeg); /* Default background image */
-  background-size: cover; /* Ensures the image covers the entire container */
-    background-position: center; /* Centers the background image */
-  background-repeat: no-repeat;
-  align-self: center; /* Centers the container horizontally */
-  transition: background-image 1s ease-in-out; /* Smooth transition when changing background */
-  display: flex; /* Use flexbox for overall layout */
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: space-between; /* Push stats to top, actions to bottom */
-  align-items: stretch; /* Stretch items to fill width */
-}
-/* Visibility control for game elements */
+/* ==============================
+   VISIBILITY STATES
+============================== */
 .hidden {
   display: none !important;
 }
-
 .invisible {
-    visibility: hidden !important;
+  visibility: hidden !important;
 }
 
-/* Side Panel for Stats and Time */
+/* ==============================
+   GAME CONTAINER
+============================== */
+#game-container {
+  position: relative;
+  width: 1000px;
+  height: 500px;
+  background-image: url(../images/testBack.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-self: center;
+  transition: background-image 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+/* ==============================
+   STATS & TIME PANEL
+============================== */
 .stats-and-time-panel {
-  position: absolute; /* Position over the background */
+  position: absolute;
   top: 10px;
   right: 10px;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-direction: column; /* Stack stat items vertically */
-  gap: 10px; /* Space between stat items */
-  z-index: 10; /* Ensures it's above the background */
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
 }
 
 .stat-item p, .time-display p {
   margin: 0;
   font-size: 1.1em;
-  white-space: nowrap; /* Prevents text from wrapping */
+  white-space: nowrap;
 }
-
 .stat-item span, .time-display span {
   font-weight: bold;
-  color: #ffe600; /* Gold color for values */
+  color: #ffe600;
 }
 
 .time-container {
@@ -75,70 +84,68 @@ body {
   padding-top: 10px;
 }
 
-/* Actions/Buttons Container */
+/* ==============================
+   ACTIONS CONTAINER & BUTTONS
+============================== */
 .actions-container {
-  display: flex; /* Use flexbox for horizontal layout of buttons */
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 20px; /* Space between buttons */
+  display: flex;
+  justify-content: center;
+  gap: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 15px 20px;
-  border-radius: 8px 8px 0 0; /* Rounded top corners */
+  border-radius: 8px 8px 0 0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  margin: 0 auto; /* Center the container itself */
-  max-width: 90%; /* Limit width to avoid stretching too wide on large screens */
-  z-index: 10; /* Ensures it's above the background */
+  margin: 0 auto;
+  max-width: 90%;
+  z-index: 10;
 }
 
-/* Individual Action Button Styling */
 .action-button {
-  background-color: #34495e; /* Dark blue-grey for buttons */
+  background-color: #34495e;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
   user-select: none;
-  transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth hover effects */
-  min-width: 120px; /* Ensures buttons are readable */
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  min-width: 120px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-
 .action-button p {
   margin: 0;
   font-size: 1em;
 }
-
 .action-button span {
-  display: block; /* Make the number appear on a new line */
+  display: block;
   font-size: 1.2em;
   font-weight: bold;
   margin-top: 5px;
-  color: #a4e4d8; /* Light blue-green for action points */
+  color: #a4e4d8;
 }
 
-/* Hover and Active states for buttons */
+/* Button States */
 .action-button:hover {
-  background-color: #4a6a8a; /* Lighter shade on hover */
-  transform: translateY(-2px); /* Slight lift effect */
+  background-color: #4a6a8a;
+  transform: translateY(-2px);
 }
-
 .action-button:active {
-  background-color: #2c3e50; /* Darker shade when pressed */
+  background-color: #2c3e50;
   transform: translateY(0);
 }
-
-/* Styling for disabled buttons (from JS) */
 .action-button[style*="pointer-events: none"] {
-  background-color: #5d6e80 !important; /* Override hover/active colors */
+  background-color: #5d6e80 !important;
   opacity: 0.6;
   cursor: default;
-  transform: none; /* No lift effect when disabled */
+  transform: none;
 }
 
-/* Message Box Styling */
+/* ==============================
+   MESSAGE BOX
+============================== */
 #message-box {
   position: absolute;
-  bottom: 20px; /* Positioned near the bottom of the game container */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -152,67 +159,63 @@ body {
   z-index: 20;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0s 0.5s; /* Hide immediately when opacity is 0 */
+  transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
-
 #message-box.show {
   opacity: 1;
   visibility: visible;
-  transition-delay: 0s; /* Show immediately */
+  transition-delay: 0s;
 }
-
 #message-box p {
   margin: 0;
   font-size: 1.1em;
 }
 
-/* Background images for different times of day (example) */
-/* These will be applied to #game-container by JavaScript */
+/* ==============================
+   TIME OF DAY BACKGROUNDS
+============================== */
 #game-container.morning {
   background-image: url();
 }
-
 #game-container.afternoon {
   background-image: url();
 }
-
 #game-container.evening {
   background-image: url();
 }
 
-/* Start Screen Styling */
+/* ==============================
+   START SCREEN
+============================== */
 #start-screen {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 25, 40, 0.95); /* Dark, thematic overlay */
+  background: rgba(10, 25, 40, 0.95);
   color: #f0f0f0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  z-index: 50; /* Ensure it's on top of everything */
+  z-index: 50;
   padding: 20px;
 }
-
 #start-screen h2 {
   font-size: 2.5em;
   color: #ffe600;
   margin-bottom: 20px;
 }
-
 #start-screen p {
   font-size: 1.2em;
   max-width: 600px;
   line-height: 1.6;
   margin-bottom: 30px;
 }
-
 #start-game-button {
-  background-color: #27ae60; /* A strong, positive green */
+  background-color: #27ae60;
   color: white;
   padding: 15px 30px;
   border: none;
@@ -224,7 +227,9 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-/* End of Day Screen Styling */
+/* ==============================
+   END OF DAY SCREEN
+============================== */
 #end-of-day-screen {
   position: absolute;
   top: 50%;
@@ -237,25 +242,21 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
   text-align: center;
   z-index: 30;
-  display: none; /* Initially hidden */
+  display: none;
 }
-
 #end-of-day-screen h2 {
   margin-bottom: 15px;
   font-size: 1.8em;
-  color: #ffe600; /* Gold color for the heading */
+  color: #ffe600;
 }
-
 #kingdom-status p {
   margin: 8px 0;
   font-size: 1.2em;
 }
-
 #kingdom-status span {
   font-weight: bold;
   color: #a4e4d8;
 }
-
 #continue-button {
   background-color: #3498db;
   color: white;
@@ -266,39 +267,41 @@ body {
   font-size: 1.1em;
 }
 
-/* Game Over Screen Styling */
+/* ==============================
+   GAME OVER SCREEN
+============================== */
 #game-over-screen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #f0f0f0;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-    text-align: center;
-    z-index: 40;
-    display: none; /* Initially hidden */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #f0f0f0;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  z-index: 40;
+  display: none;
 }
-
 #game-over-screen h2 {
-    font-size: 2.2em;
-    color: #e74c3c; /* A thematic red for game over */
-    margin-bottom: 10px;
+  font-size: 2.2em;
+  color: #e74c3c;
+  margin-bottom: 10px;
 }
-
 #replay-button {
-    background-color: #2980b9;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
+  background-color: #2980b9;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
 }
 
-/* Media Queries for Responsiveness */
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
 @media (max-width: 768px) {
   .stats-and-time-panel {
     top: 5px;
@@ -306,35 +309,30 @@ body {
     padding: 10px;
     gap: 5px;
   }
-
   .stat-item p, .time-display p {
     font-size: 0.9em;
   }
-
   .actions-container {
-    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
-    justify-content: space-around; /* Distribute space evenly */
+    flex-wrap: wrap;
+    justify-content: space-around;
     padding: 10px;
     gap: 10px;
     max-width: 95%;
   }
-
   .action-button {
-    min-width: unset; /* Remove minimum width */
-    width: 45%; /* Two buttons per row on smaller screens */
+    min-width: unset;
+    width: 45%;
     padding: 10px 15px;
   }
 }
-
 @media (max-width: 480px) {
   .actions-container {
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center stacked buttons */
+    flex-direction: column;
+    align-items: center;
     gap: 8px;
     max-width: 90%;
   }
-
   .action-button {
-    width: 90%; /* Buttons take almost full width */
+    width: 90%;
   }
 }
