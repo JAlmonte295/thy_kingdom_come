@@ -9,17 +9,32 @@ body {
   color: #f0f0f0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  background-image: url(../images/stoneWall.jpg);
 }
 
 /* ==============================
    HEADER
 ============================== */
 header {
-  background-color: #2c3e50;
   color: white;
   text-align: center;
   padding: 20px;
+}
+
+main {
+  width: 100%;
+  flex-grow: 1; /* Allow main to fill available vertical space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the game components vertically */
+  align-items: center; /* Center the game components horizontally */
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+.logo {
+  max-width: 500px;
+  margin-bottom: 10px;
 }
 
 /* ==============================
@@ -27,9 +42,11 @@ header {
 ============================== */
 .hidden {
   display: none !important;
+  
 }
 .invisible {
   visibility: hidden !important;
+  
 }
 
 /* ==============================
@@ -37,18 +54,37 @@ header {
 ============================== */
 #game-container {
   position: relative;
-  width: 1000px;
-  height: 500px;
-  background-image: url(../images/testBack.jpeg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  align-self: center;
-  transition: background-image 1s ease-in-out;
+  width: 95%;
+  max-width: 1000px;
+  aspect-ratio: 2 / 1; /* Maintain shape while scaling, replaces fixed height */
+  margin: 0 auto; /* Center the container horizontally */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
+  /* Add a transition for the background color to change smoothly */
+  transition: background-color 1s ease-in-out;
+  /* Create a new stacking context so the ::before pseudo-element is contained */
+  isolation: isolate;
+  border: #ddc55e 5px solid;
+  border-radius: 10px;
+  overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
+}
+
+/* This pseudo-element now holds the main background image.
+   It's placed on top of the container's background color, but behind the content.
+   Making it semi-transparent allows the background color to "shine through". */
+#game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../images/mainScreen.png);
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* Sits above the container's background but below its content */
 }
 
 /* ==============================
@@ -91,17 +127,19 @@ header {
   display: flex;
   justify-content: center;
   gap: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(81, 38, 0, 0.7);
   padding: 15px 20px;
   border-radius: 8px 8px 0 0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  margin: 0 auto;
-  max-width: 90%;
+  width: 95%;
+  max-width: 1000px; /* Match the width of the game-container */
+  box-sizing: border-box; /* Ensures padding is included in the total width */
   z-index: 10;
+  margin: 0 auto; /* Center the container horizontally */
 }
 
 .action-button {
-  background-color: #34495e;
+  background-color: #00382e;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
@@ -111,7 +149,13 @@ header {
   transition: background-color 0.3s ease, transform 0.1s ease;
   min-width: 120px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* Use flexbox to perfectly center the content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 .action-button p {
   margin: 0;
   font-size: 1em;
@@ -121,12 +165,17 @@ header {
   font-size: 1.2em;
   font-weight: bold;
   margin-top: 5px;
-  color: #a4e4d8;
+  color: #f2ec71;
+}
+
+/* Hide the span in the taxes button since it's empty and creates unwanted space */
+.action-button span:empty {
+  display: none;
 }
 
 /* Button States */
 .action-button:hover {
-  background-color: #4a6a8a;
+  background-color: #005015;
   transform: translateY(-2px);
 }
 .action-button:active {
@@ -172,16 +221,63 @@ header {
 }
 
 /* ==============================
+   INSTRUCTIONS
+============================== */
+#instructions-button {
+  background-color: #2980b9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin: 20px auto; /* Use auto margins to center the button horizontally */
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
+#instructions-button:hover {
+  background-color: #3498db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+
+}
+
+#instructions-panel {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
+  z-index: 15;
+}
+
+#instructions-panel h3 {
+  color: #ffe600;
+  margin-bottom: 10px;
+}
+
+
+/* ==============================
    TIME OF DAY BACKGROUNDS
 ============================== */
+/* These classes are now on the main container to change its actual background color */
 #game-container.morning {
-  background-image: url();
+  background-color: #a9d6e5; /* A soft blue for morning */
 }
 #game-container.afternoon {
-  background-image: url();
+  background-color: #468faf; /* A deeper blue for afternoon */
 }
 #game-container.evening {
-  background-image: url();
+  background-color: #012a4a; /* A dark navy for evening */
 }
 
 /* ==============================
@@ -303,6 +399,9 @@ header {
    RESPONSIVE DESIGN
 ============================== */
 @media (max-width: 768px) {
+  .logo {
+    max-width: 350px; /* Reduce logo size for tablets */
+  }
   .stats-and-time-panel {
     top: 5px;
     right: 5px;
@@ -317,7 +416,6 @@ header {
     justify-content: space-around;
     padding: 10px;
     gap: 10px;
-    max-width: 95%;
   }
   .action-button {
     min-width: unset;
@@ -326,13 +424,18 @@ header {
   }
 }
 @media (max-width: 480px) {
+  .logo {
+    max-width: 220px; /* Further reduce logo size for phones */
+  }
   .actions-container {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    max-width: 90%;
   }
   .action-button {
     width: 90%;
+  }
+  .stat-item p, .time-display p {
+    white-space: normal; /* Allow text to wrap, making the panel narrower */
   }
 }

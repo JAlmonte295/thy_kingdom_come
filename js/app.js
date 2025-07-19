@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const gameOverScreen = document.getElementById('game-over-screen');
   const gameOverMessage = document.getElementById('game-over-message');
   const startGameButton = document.getElementById('start-game-button');
+  const instructionsButton = document.getElementById('instructions-button');
+  const instructionsPanel = document.getElementById('instructions-panel');
   const continueButton = document.getElementById('continue-button');
 
   // ------------------------------
@@ -69,6 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     cultureTotalSpan.textContent = culturePoints;
     currentDaySpan.textContent = currentDay;
     currentTimeOfDaySpan.textContent = timePhases[currentTimeIndex];
+
+    // Update background based on time of day
+    gameContainer.classList.remove('morning', 'afternoon', 'evening');
+    const timeOfDayClass = timePhases[currentTimeIndex].toLowerCase();
+    gameContainer.classList.add(timeOfDayClass);
   }
 
   function showStatusMessage(message, isTemporary = false) {
@@ -306,4 +313,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
   gameContainer.classList.add('invisible');
   actionsContainer.classList.add('invisible');
+
+  // ------------------------------
+  // Instructions Button Event
+  // ------------------------------
+
+  instructionsButton.addEventListener('click', () => instructionsPanel.classList.toggle('hidden'));
 });

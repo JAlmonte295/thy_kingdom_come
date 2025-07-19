@@ -9,14 +9,13 @@
 </head>
 <body>
     <header>
-        <img src="./assets/logo.png" alt="Thy Kingdom Come Logo" class="logo">
-        <h1 class="title">Thy Kingdom Come</h1>
-        <p class="subtitle">A Game of Strategy and Kingdom Building</p>
+        <img src="../thy_kingdom_come/images/logo.png" alt="Thy Kingdom Come Logo" class="logo">
     </header>
     <main>
         <div id="start-screen">
+            <img src="../thy_kingdom_come/images/logo.png" alt="Thy Kingdom Come Logo" class="logo">
             <h2>Welcome, Your Majesty</h2>
-            <p>Your kingdom awaits your leadership. The enemy approaches in 7 days. Can you prepare your kingdom for the onslaught?</p>
+            <p>Your kingdom awaits your leadership. The enemy approaches in 7 days. Can you prepare your kingdom for the incoming battle?</p>
             <button id="start-game-button">Begin Your Reign</button>
         </div>
 
@@ -89,6 +88,13 @@
     <div class="action-button taxes-div">
       <p>💸 Taxes <span id="taxes-total"></span></p>
     </div>
+  </div>
+
+  <button id="instructions-button">How to Play</button>
+  <div id="instructions-panel" class="hidden">
+    <h3>Game Instructions</h3>
+    <p>Manage your kingdom's resources (Treasury, Popularity, Military, etc.) by performing actions each day. Each action costs resources and affects your kingdom. Survive for 7 days to win!</p>
+    <p>Keep your popularity high by managing resources effectively. Watch out for events that may impact your kingdom!</p>
   </div>
 
     </main>
