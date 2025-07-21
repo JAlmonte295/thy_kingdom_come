@@ -12,6 +12,7 @@
         <img src="../thy_kingdom_come/images/logo.png" alt="Thy Kingdom Come Logo" class="logo">
     </header>
     <main>
+        <h1 class="visually-hidden">Thy Kingdom Come</h1>
         <div id="start-screen">
             <img src="../thy_kingdom_come/images/logo.png" alt="Thy Kingdom Come Logo" class="logo">
             <h2>Welcome, Your Majesty</h2>
@@ -58,15 +59,6 @@
 
   <div id="end-of-day-screen">
     <h2>End of Day <span id="end-day-number">1</span></h2>
-    <div id="kingdom-status">
-      <p>💰 Treasury: <span id="eod-treasury">0</span></p>
-      <p>😊 Popularity: <span id="eod-popularity">0</span></p>
-      <p>⚔️ Military: <span id="eod-military">0</span></p>
-      <p>🏗️ Structure: <span id="eod-structure">0</span></p>
-      <p>🍎 Food: <span id="eod-food">0</span></p>
-      <p>🎨 Culture: <span id="eod-culture">0</span></p>
-      <p>💪 Power Level: <span id="eod-power">0</span></p>
-    </div>
     <p id="win-probability-message">Your win probability is: <span id="win-probability">50</span>%</p>
     <button id="continue-button">Continue to Next Day</button>
   </div>
@@ -92,11 +84,58 @@
 
   <button id="instructions-button">How to Play</button>
   <div id="instructions-panel" class="hidden">
-    <h3>Game Instructions</h3>
-    <p>Manage your kingdom's resources (Treasury, Popularity, Military, etc.) by performing actions each day. Each action costs resources and affects your kingdom. Survive for 7 days to win!</p>
-    <p>Keep your popularity high by managing resources effectively. Watch out for events that may impact your kingdom!</p>
+    <h3>How to Play</h3>
+    <p><strong>Your Goal:</strong> Prepare your kingdom to withstand an enemy invasion at the end of the 7th day. Your leadership will determine if your kingdom stands victorious or crumbles to dust.</p>
+    
+    <h4>Daily Actions:</h4>
+    <p>Each day is divided into three phases: Morning, Afternoon, and Evening. In each phase, you can perform <strong>one action</strong>. Choose wisely, as your resources are limited.</p>
+    <ul>
+        <li><strong>Military, Structure, Food, Culture:</strong> Spend 5 Treasury to increase the corresponding stat by 10.</li>
+        <li><strong>Taxes:</strong> Gain 10 Treasury, but at the cost of 5 Popularity.</li>
+    </ul>
+
+    <h4>Managing Your Kingdom:</h4>
+    <ul>
+        <li><strong>Treasury (💰):</strong> Your primary resource for all actions.</li>
+        <li><strong>Popularity (😊):</strong> Keep your people happy! If your Popularity drops to 0, your people will revolt and you will lose the game.</li>
+        <li><strong>Food (🍎) & Culture (🎨):</strong> These are vital for your people's morale. At the end of each day:
+            <ul>
+                <li>If both Food and Culture are high (30+), your Popularity will <strong>increase</strong>.</li>
+                <li>If either Food or Culture is too low (below 20), your Popularity will <strong>decrease</strong>.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>Winning the Game:</h4>
+    <p>On the final day, your kingdom's strength will be tested. To achieve victory, your total <strong>Power Level (Military + Structure)</strong> must be high enough to repel the enemy forces (at least 100). Fail, and your kingdom will be overrun.</p>
   </div>
 
     </main>
+    <!-- audio files -->
+    <audio id="background-music" loop>
+        <source src="../thy_kingdom_come/sounds/medieval_music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="military-sound">
+        <source src="../thy_kingdom_come/sounds/326851__johnbuhr__sword_clash-38.wav" type="audio/mpeg">
+        </audio>
+    <audio id="structure-sound">
+        <source src="../thy_kingdom_come/sounds/249490__katiemullen__hammering.wav" type="audio/mpeg">
+        </audio>
+    <audio id="food-sound">
+        <source src="../thy_kingdom_come/sounds/632232__audacitier__biting-apple-1.mp3" type="audio/mpeg">
+        </audio>
+    <audio id="culture-sound">
+        <source src="../thy_kingdom_come/sounds/334916__akrythael__bard-melody.wav" type="audio/mpeg">
+        </audio>
+    <audio id="taxes-sound">
+        <source src="../thy_kingdom_come/sounds/cash-register-kaching-sound-effect-125042.mp3" type="audio/mpeg">
+        </audio>
+    <audio id="victory-sound">
+        <source src="../thy_kingdom_come/sounds/medieval-fanfare-6826.mp3" type="audio/mpeg">
+        </audio>
+    <audio id="defeat-sound">
+        <source src="../thy_kingdom_come/sounds/Eternal Sleep MP3.mp3" type="audio/mpeg">
+        </audio>
 </body>
 </html>
