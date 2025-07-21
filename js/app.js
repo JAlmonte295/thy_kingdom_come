@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function continueToNextDay() {
     enableActionButtons();
     endOfDayScreen.style.display = 'none';
-    if (currentDay >= maxDays) {
+    if (currentDay > maxDays) {
       const playerPower = militaryPoints + structurePoints;
       const enemyPower = 120; // The power level to beat
       if (playerPower >= enemyPower) {
