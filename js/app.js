@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isTemporary) {
       setTimeout(() => {
         messageBox.classList.remove('show');
-      }, 10000); // Increased from 2.5s to 6s
+      }, 10000); // increse the timeout to 10 seconds for better visibility
     }
   }
 
@@ -160,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
 
-    // Remove previous state classes and add the new one
     gameOverScreen.classList.remove('victory-bg', 'defeat-bg', 'revolt-bg');
 
     if (outcome === 'victory') {
@@ -170,13 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
       playSound(gameOverSound);
       if (outcome === 'defeat_revolt') {
         gameOverScreen.classList.add('revolt-bg');
-      } else { // Default to battle defeat
+      } else { 
         gameOverScreen.classList.add('defeat-bg');
       }
     }
 
     gameOverMessage.textContent = message;
-    // Use flex to enable centering from CSS
     gameOverScreen.style.display = 'flex';
   }
 
@@ -185,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     endOfDayScreen.style.display = 'none';
     if (currentDay > maxDays) {
       const playerPower = militaryPoints + structurePoints;
-      const enemyPower = 120; // The power level to beat
+      const enemyPower = 100; // The power level to beat
       if (playerPower >= enemyPower) {
         endGame("Your kingdom stood strong and repelled the enemy forces! Victory is yours!", 'victory');
       } else {
@@ -206,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentTimeIndex >= timePhases.length) {
       // End of day
-      endDayNumberSpan.textContent = currentDay; // Display the day that just ended
+      endDayNumberSpan.textContent = currentDay; 
       currentTimeIndex = 0;
       currentDay++;
       const currentPowerLevel = militaryPoints + structurePoints;
@@ -257,9 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
       culturePoints = Math.max(0, culturePoints);
 
       // Game over checks
-      if (currentDay > maxDays) {
-        currentDay = maxDays;
-      }
       if (popularityPoints <= 0) {
         endGame("Your rule has collapsed. The people have revolted!", 'defeat_revolt');
       }
