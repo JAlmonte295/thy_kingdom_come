@@ -252,7 +252,7 @@ main {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.1em;
-  margin: 20px auto; /* Use auto margins to center the button horizontally */
+  margin: 0; /* Centering is handled by the flex container */
   transition: background-color 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -298,7 +298,79 @@ main {
   color: #ffe600;
   margin-bottom: 10px;
 }
+/* ==============================
+   MUTE BUTTON
+============================== */
+#toggle-mute-button {
+  background-color: #555;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin: 0; /* Centering is handled by the flex container */
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+#toggle-mute-button:hover {
+  background-color: #777;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+#toggle-mute-button:active {
+  background-color: #333;
+  transform: translateY(0);
+} 
+/* ==============================
+   RESTART BUTTON
+============================== */
+#restart-button {
+  background-color: #22a1e6;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin: 0; /* Centering is handled by the flex container */
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#restart-button:hover {
+  background-color: #0080ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#restart-button:active {
+  background-color: #d35400;
+  transform: translateY(0);
+}
+
+/* ==============================
+   CONTROL BUTTONS CONTAINER
+============================== */
+.control-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+  width: 100%;
+  padding: 0 20px; /* Add some padding so buttons don't touch edges on small screens */
+  box-sizing: border-box;
+}
 
 /* ==============================
    TIME OF DAY BACKGROUNDS
@@ -510,5 +582,26 @@ main {
   }
   .stat-item p, .time-display p {
     white-space: normal; /* Allow text to wrap, making the panel narrower */
+  }
+  .control-buttons-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .control-buttons-container button {
+    width: 90%;
+  }
+  #instructions-button {
+    order: -1; /* Moves this button to the top of the flex container on mobile */
+  }
+  #start-screen h2 {
+    font-size: 2em; /* Reduce font size for smaller screens */
+  }
+  #start-screen p {
+    font-size: 1em; /* Adjust paragraph font size */
+    margin-bottom: 20px;
+  }
+  #start-game-button {
+    padding: 12px 25px; /* Adjust button padding */
+    font-size: 1.1em;
   }
 }

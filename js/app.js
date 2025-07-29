@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let treasuryPoints, popularityPoints, militaryPoints, structurePoints, foodPoints, culturePoints;
   let currentDay, currentTimeIndex, actionTakenThisTimeSlot;
+  let muteState = 0; // 0 = all on, 1 = music muted, 2 = all muted
   const maxDays = 7;
   const timePhases = ['Morning', 'Afternoon', 'Evening'];
 
@@ -52,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const startGameButton = document.getElementById('start-game-button');
   const instructionsButton = document.getElementById('instructions-button');
   const instructionsPanel = document.getElementById('instructions-panel');
+  const muteButton = document.getElementById('toggle-mute-button');
+  const restartButton = document.getElementById('restart-button');
   const continueButton = document.getElementById('continue-button');
 
   // ------------------------------
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const taxesSound = document.getElementById('taxes-sound');
   const gameOverSound = document.getElementById('defeat-sound');
   const victorySound = document.getElementById('victory-sound');
+  const soundEffects = [militarySound, structureSound, foodSound, cultureSound, taxesSound, gameOverSound, victorySound];
 
   // Set default volumes (0.0 to 1.0)
   backgroundMusic.volume = 0.3;
@@ -110,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isTemporary) {
       setTimeout(() => {
         messageBox.classList.remove('show');
-      }, 10000); // increse the timeout to 10 seconds for better visibility
+      }, 15000); // increse the timeout to 15 seconds for better visibility
     }
   }
 
@@ -277,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showStatusMessage('You have bolstered your army. Your military might grows!');
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1500);
+        setTimeout(endCurrentTimeSlot, 3000);
       } else {
         showStatusMessage('Your treasury is too low to fund the military!', true);
       }
@@ -294,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showStatusMessage("New walls have been erected, strengthening your kingdom's defenses.");
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1500);
+        setTimeout(endCurrentTimeSlot, 3000);
       } else {
         showStatusMessage('You lack the funds for new construction projects.', true);
       }
@@ -311,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showStatusMessage('The granaries are filling up. Your people will not go hungry this day.');
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1500);
+        setTimeout(endCurrentTimeSlot, 3000);
       } else {
         showStatusMessage('Not enough gold to purchase more food.', true);
       }
@@ -328,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showStatusMessage('The arts flourish, bringing joy and prestige to your kingdom.');
         updateDisplay();
         disableActionButtons();
-        setTimeout(endCurrentTimeSlot, 1500);
+        setTimeout(endCurrentTimeSlot, 3000);
       } else {
         showStatusMessage('There are no funds available to support the arts.', true);
       }
@@ -344,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showStatusMessage("The treasury swells from new taxes, but your people's spirits are dampened.");
       updateDisplay();
       disableActionButtons();
-      setTimeout(endCurrentTimeSlot, 1500);
+      setTimeout(endCurrentTimeSlot, 3000);
     }
   });
 
@@ -374,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
   gameContainer.classList.add('invisible');
   actionsContainer.classList.add('invisible');
   instructionsButton.classList.add('jumping');
+  muteButton.textContent = '🔇 Mute Music';
 
   // ------------------------------
   // Instructions Button Event
@@ -387,4 +392,58 @@ document.addEventListener('DOMContentLoaded', () => {
       instructionsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
+
+
+  // ------------------------------
+  // Mute Button Event
+  // ------------------------------
+
+  muteButton.addEventListener('click', () => {
+    muteState = (muteState + 1) % 3; // Cycle through 0, 1, 2
+
+    switch (muteState) {
+      case 0: // All sound on
+        backgroundMusic.muted = false;
+        soundEffects.forEach(sound => sound.muted = false);
+        muteButton.textContent = '🔇 Mute Music';
+        break;
+      case 1: // Music only muted
+        backgroundMusic.muted = true;
+        soundEffects.forEach(sound => sound.muted = false);
+        muteButton.textContent = '🔇 Mute All';
+        break;
+      case 2: // All sound muted
+        backgroundMusic.muted = true;
+        soundEffects.forEach(sound => sound.muted = true);
+        muteButton.textContent = '🔈 Unmute';
+        break;
+    }
+  });
+
+  // --------------------------
+  // Restart Button Event
+  // --------------------------
+
+  restartButton.addEventListener('click', () => {
+    // Stop any music that might be playing
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+    gameOverSound.pause();
+    gameOverSound.currentTime = 0;
+    victorySound.pause();
+    victorySound.currentTime = 0;
+
+    // Hide all game elements and overlays to return to the main menu
+    header.classList.add('hidden');
+    gameContainer.classList.add('invisible');
+    actionsContainer.classList.add('invisible');
+    endOfDayScreen.style.display = 'none';
+    gameOverScreen.style.display = 'none';
+    instructionsPanel.classList.add('hidden');
+
+    // Show the start screen again
+    startScreen.classList.remove('hidden');
+    instructionsButton.classList.add('jumping');
+  });
+
 });
