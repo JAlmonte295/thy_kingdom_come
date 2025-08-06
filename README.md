@@ -39,6 +39,7 @@ Future features and improvements could include:
 - **Advisor System:** Add advisors who offer suggestions or warnings based on the current state of the kingdom, providing more narrative depth.
 - **Expanded Tech Tree:** Allow for more complex upgrades, such as unlocking new unit types or building structures that provide passive bonuses.
 - **Animated Graphics:** Enhance the visual experience with animations for actions, transitions, and events to make the game more engaging.
+- **Multiplayer Mode:** Implement a competitive multipler mode where players can compete to build the strongest kingdom within the same timeframe.
 
 ---
 
